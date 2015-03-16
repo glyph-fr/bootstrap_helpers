@@ -22,11 +22,16 @@ module Bootstrap
       merge_class!(options, "modal-header")
 
       content_tag(:div, options) do
-        content_tag(:button, "&times;".html_safe, class: "close", type: "button",
-          "data-dismiss" => "modal", "aria-hidden" => "true"
-        ) +
-        content_tag(:h4, class: "modal-title") do
+        title = content_tag(:h4, class: "modal-title") do
           capture { block.call }
+        end
+        if options.delete(:close) == false
+          title
+        else
+          content_tag(:button, "&times;".html_safe, class: "close", type: "button",
+            "data-dismiss" => "modal", "aria-hidden" => "true"
+          ) +
+          title
         end
       end
     end
