@@ -2,7 +2,7 @@ module Bootstrap
   class Modal < Bootstrap::Component
     def container(options = {}, &block)
       merge_class!(options, "modal")
-      merge_class!(options, "fade") unless options.delete(:fade) == false
+      merge_class!(options, "fade") if options.delete(:fade)
       merge_class!(options, "in") if options.delete(:displayed)
 
       options.reverse_merge!(
@@ -25,7 +25,7 @@ module Bootstrap
         title = content_tag(:h4, class: "modal-title") do
           capture { block.call }
         end
-        if options.delete(:close) == false
+        unless options.delete(:close)
           title
         else
           content_tag(:button, "&times;".html_safe, class: "close", type: "button",
