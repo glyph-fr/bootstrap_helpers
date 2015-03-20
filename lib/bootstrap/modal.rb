@@ -25,12 +25,12 @@ module Bootstrap
         title = content_tag(:h4, class: "modal-title") do
           capture { block.call }
         end
-        unless options.delete(:close)
-          title
-        else
+        if !options.key?(:close) || options.delete(:close)
           content_tag(:button, "&times;".html_safe, class: "close", type: "button",
             "data-dismiss" => "modal", "aria-hidden" => "true"
           ) +
+          title
+        else
           title
         end
       end
